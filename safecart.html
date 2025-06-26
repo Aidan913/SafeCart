@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF- />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SafeCart: Verify Before You Buy</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" type="image/png" />
+  <meta name="theme-color" content="#28a745" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #e6f4ea, #ffffff);
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #28a745;
+    }
+    p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.8rem 2rem;
+      background: #28a745;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .result {
+      margin-top: 1.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .safe {
+      color: green;
+    }
+    .warning {
+      color: orange;
+    }
+    .danger {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="icon.png" alt="SafeCart Icon" width="64" height="64" />
+    <h1>SafeCart</h1>
+    <p>Verify Before You Buy</p>
+    <input type="text" id="inputUrl" placeholder="Enter shopping site URL or app name" />
+    <button onclick="checkSite()">Check Safety</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const scamList = [
+      "fake-shop.com",
+      "buycheapscam.app",
+      "unrealdeals.net",
+      "discounttrap.store",
+      "freestufffraud.shop"
+    ];
+
+    function checkSite() {
+      const input = document.getElementById("inputUrl").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (input === "") {
+        result.innerHTML = "Please enter a website or app name.";
+        result.className = "result warning";
+        return;
+      }
+
+      if (scamList.includes(input)) {
+        result.innerHTML = `🚫 <strong>${input}</strong> is a reported FAKE site/app! Do NOT use it.`;
+        result.className = "result danger";
+      } else {
+        result.innerHTML = `✅ <strong>${input}</strong> does not match known scam records. Still, be cautious!`;
+        result.className = "result safe";
+      }
+    }
+  </script>
+</body>
+</html>
